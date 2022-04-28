@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from flask_testing import TestCase
 import sqlite3
 import datetime
 
@@ -10,6 +11,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 active_username = False
+
 
 class Account(db.Model):
     username = db.Column(db.String(100), primary_key=True)
@@ -27,7 +29,7 @@ class Event(db.Model):
     username = db.Column(db.String(100))
     date = db.Column(db.Date)
 
-    
+
 def create_account(username, password, repeat_password):
     # Ensure an account with the same username does not already exist
     existing_account = Account.query.filter_by(username=username).first()
