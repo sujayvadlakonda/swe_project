@@ -44,6 +44,7 @@ def create_account(username, password, repeat_password):
     db.session.commit()
     return 'Account created! Go back to home page to login'
 
+
 def login(username, password):
     account = Account.query.filter_by(username=username).first()
     if not account:
@@ -51,7 +52,18 @@ def login(username, password):
     elif account.password != password:
         return 'Passwords do not match'
     return 'Success!'
-    
+
+
+def validate_event(name, input_date):
+    date = ''
+    try:
+        date = datetime.datetime.strptime(input_date, '%Y-%m-%d')
+    except ValueError:
+        return 'Invalid Date!'
+
+    return 'Event successfully added'
+
+
 @app.route('/')
 def index():
     return render_template('index.html', active_username=active_username)
@@ -90,8 +102,10 @@ def create_account_endpoint():
         
     return render_template('create_account.html', msg=msg)
 
+
 def sortEvent(event):
     return event.date
+
 
 @app.route('/events')
 def events():
@@ -105,24 +119,20 @@ def events():
 
 
 @app.route('/add_event', methods=['GET', 'POST'])
-def add_event():
+def add_event_endpoint():
     if not active_username:
         return 'Need to be logged in!'
     msg = ''
     if request.method == 'POST':
         name = request.form['name']
-        username = active_username
         input_date = request.form['date']
-        date = ''
-        try:
-            date = datetime.datetime.strptime(input_date, '%Y-%m-%d')
-        except ValueError:
-            return 'Invalid Date!'
-
-        event = Event(name=name, username=username, date=date)
-        db.session.add(event)
-        db.session.commit()
-        msg = 'Event successfully added'
+        msg = validate_event(name, input_date)
+        if msg == 'Event successfully added':
+            username = active_username
+            event = Event(name=name, username=username, date=date)
+            db.session.add(event)
+            db.session.commit()
+            
     return render_template('add_event.html', msg=msg)
 
 

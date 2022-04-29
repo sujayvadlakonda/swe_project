@@ -62,5 +62,19 @@ class LoginTests(DefaultTest):
         assert login(username, password) == 'No account with that username found'
         
     
+class AddEventTests(DefaultTest):
+    def test_add_event_success(self):
+        name = 'Donkey Kong!'
+        date = '2023-01-01'
+        assert validate_event(name, date) == 'Event successfully added'
+
+
+    def test_add_event_invalid_date(self):
+        name = 'Donkey Kong!'
+        date = '01/01/2023'
+        assert validate_event(name, date) == 'Invalid Date!'
+
+
+
 if __name__ == '__main__':
     unittest.main()
