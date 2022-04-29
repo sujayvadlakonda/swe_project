@@ -64,6 +64,10 @@ def validate_event(name, input_date):
     return 'Event successfully added'
 
 
+def view_events():
+    return Event.query.filter_by(username=active_username).all()
+    
+
 @app.route('/')
 def index():
     return render_template('index.html', active_username=active_username)
@@ -112,7 +116,7 @@ def events():
     if not active_username:
         return 'Need to be logged in!'
 
-    events = Event.query.filter_by(username=active_username).all()
+    events = view_events()
     if events is not None:
         events.sort(key=sortEvent)
     return render_template('events.html', events=events)
@@ -129,6 +133,7 @@ def add_event_endpoint():
         msg = validate_event(name, input_date)
         if msg == 'Event successfully added':
             username = active_username
+            date = datetime.datetime.strptime(input_date, '%Y-%m-%d')
             event = Event(name=name, username=username, date=date)
             db.session.add(event)
             db.session.commit()

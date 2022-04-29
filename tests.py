@@ -75,6 +75,13 @@ class AddEventTests(DefaultTest):
         assert validate_event(name, date) == 'Invalid Date!'
 
 
+class ViewEvents(DefaultTest):
+    def test_empty_view_events(self):
+        create_account('ViewEvents', 'ViewEvents', 'ViewEvents')
+        login('ViewEvents', 'ViewEvents')
+        assert len(view_events()) == 0
+
+
 
 if __name__ == '__main__':
     unittest.main()
