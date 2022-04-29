@@ -8,9 +8,6 @@ import sqlite3
 import datetime
 
 class DefaultTest(TestCase):
-    SQLALCHEMY_DATABASE_URI = "sqlite://"
-    TESTING = True
-
     def create_app(self):
         app = Flask(__name__)
         app.secret_key = 'TheSecretIngredientToTheSecretIngredientSoup'

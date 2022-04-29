@@ -6,6 +6,9 @@
 # How to run
 1. `python3 main.py`
 
+# How to run tests
+1. `python3 tests.py`
+
 # How to hard reset database
 Delete the file called project.sqlite3
 This is a generated file that represents the db

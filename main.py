@@ -44,6 +44,13 @@ def create_account(username, password, repeat_password):
     db.session.commit()
     return 'Account created! Go back to home page to login'
 
+def login(username, password):
+    account = Account.query.filter_by(username=username).first()
+    if not account:
+        return 'No account with that username found'
+    elif account.password != password:
+        return 'Passwords do not match'
+    return 'Success!'
     
 @app.route('/')
 def index():
@@ -51,17 +58,13 @@ def index():
 
 
 @app.route('/login', methods=['GET', 'POST'])
-def login():
+def login_endpoint():
     msg = ''
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        account = Account.query.filter_by(username=username).first()
-        if not account:
-            msg = 'No account with that username found'
-        elif account.password != password:
-            msg = 'Passwords do not match'
-        else:
+        msg = login(username, password)
+        if msg == 'Success!':
             global active_username
             active_username = username
             print('Active Username: ' + active_username)
