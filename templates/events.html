@@ -1,5 +1,4 @@
 {% for event in events %}
 <p> {{ event.name }} {{ event.date.strftime('%Y-%m-%d') }}</p>
 {% endfor %}
-<button onclick="location.href='/add_event'" type="button"> Add an Event </button>
 <button onclick="location.href='/'" type="button"> Home Page </button>

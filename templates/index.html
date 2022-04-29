@@ -1,6 +1,7 @@
 {% if active_username %}
 <div> {{ active_username }} is logged in! </div>
 <button onclick="location.href='/events'" type="button">View Events</button>
+<button onclick="location.href='/add_event'" type="button"> Add an Event </button>
 <button onclick="location.href='/logout'" type="button">Logout</button>
 {% else %}
 <button onclick="location.href='/create_account'" type="button">Create Account</button>
