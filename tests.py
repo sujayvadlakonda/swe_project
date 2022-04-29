@@ -40,9 +40,26 @@ class CreateAccountTests(DefaultTest):
         assert create_account(username, password, password) == 'Account already exists'
 
     def test_invalid_repeat_password(self):
-        assert create_account('a', 'a', 'b') == 'Passwords do not match!'
+        assert create_account('apple', 'a', 'b') == 'Passwords do not match!'
 
 
+class LoginTests(DefaultTest):
+    def test_login_success(self):
+        username = 'a'
+        password = 'a'
+        create_account(username, password, password)
+        assert login(username, password) == 'Success!'
+
+    def test_login_wrong_password(self):
+        username = 'a'
+        password = 'a'
+        create_account(username, password, password)
+        assert login(username, 'b') == 'Passwords do not match'
+
+    def test_login_no_username(self):
+        username = 'Naxadromus'
+        password = 'a'
+        assert login(username, password) == 'No account with that username found'
         
     
 if __name__ == '__main__':
