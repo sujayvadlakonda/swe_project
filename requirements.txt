@@ -1,3 +1,4 @@
 Flask==1.0.2
 Flask-SQLAlchemy==2.5.1
 Flask-Testing
+werkzeug>=3.0.1 # not directly required, pinned by Snyk to avoid a vulnerability
